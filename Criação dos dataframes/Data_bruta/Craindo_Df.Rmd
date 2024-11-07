@@ -1,0 +1,344 @@
+---
+title: "Untitled"
+author: "Yuri"
+date: "`r Sys.Date()`"
+output: html_document
+---
+```{r}
+### Pacotes
+
+pacman::p_load(readxl,tidyverse,dplyr,readODS)
+```
+
+
+```{r,error=F, warning=F}
+### Leitura do primeiro set de bancos
+
+Acre <- read_excel("Tabela 2.1 - Acre.xlsx",
+                   skip = 4)
+
+Alagoas <- read_excel("Tabela 2.2 - Alagoas.xlsx", 
+                      skip = 4)
+
+Amapa = read_excel("Tabela 2.3 - Amapa.xlsx",
+                    skip = 4)
+
+Amazonas = read_excel("Tabela 2.4 - Amazonas.xlsx",
+                   skip = 4)
+
+Bahia = read_excel("Tabela 2.5 - Bahia.xlsx",
+                      skip = 4)
+
+Ceara = read_excel("Tabela 2.6 - Ceara.xlsx",
+                    skip = 4)
+
+DF = read_excel("Tabela 2.7 - Distrito Federal.xlsx",
+                      skip = 4)
+
+Espirito = read_excel("Tabela 2.8 - Espirito Santo.xlsx",
+                       skip = 4)
+
+Goias = read_excel("Tabela 2.9 - Goias.xlsx",
+                    skip = 4)
+
+Maranhao = read_excel("Tabela 2.10 - Maranhao.xlsx",
+                       skip = 4)
+
+Minas = read_excel("Tabela 2.11 - Minas Gerais.xlsx",
+                    skip = 4)
+
+Mato = read_excel("Tabela 2.12 - Mato Grosso.xlsx",
+                   skip = 4)
+
+Mato_Sul = read_excel("Tabela 2.13 - Mato Grosso do Sul.xlsx",
+                       skip = 4)
+
+Para = read_excel("Tabela 2.14 - Para.xlsx",
+                     skip = 4)
+
+Paraiba = read_excel("Tabela 2.15 - Paraiba.xlsx",
+                     skip = 4)
+
+Parana = read_excel("Tabela 2.16 - Parana.xlsx",
+                     skip = 4)
+
+Pernambuco = read_excel("Tabela 2.17 - Pernambuco.xlsx",
+                         skip = 4)
+
+Piaui = read_excel("Tabela 2.18 - Piaui.xlsx",
+                    skip = 4)
+
+RJ = read_excel("Tabela 2.19 - Rio de Janeiro.xlsx",
+                 skip = 4)
+
+Rio_norte = read_excel("Tabela 2.20 - Rio Grande do Norte.xlsx",
+                        skip = 4)
+
+Rio_Grande_do_Sul = read_excel("Tabela 2.21 - Rio Grande do Sul.xlsx",
+                                skip = 4)
+
+Rondonia = read_excel("Tabela 2.22 - Rondonia.xlsx",
+                       skip = 4)
+
+Roraima = read_excel("Tabela 2.23 - Roraima.xlsx",
+                      skip = 4)
+
+Catarina = read_excel("Tabela 2.24 - Santa Catarina.xlsx",
+                       skip = 4)
+
+SP = read_excel("Tabela 2.25 - Sao Paulo.xlsx",
+                 skip = 4)
+
+Sergipe = read_excel("Tabela 2.26 - Sergipe.xlsx",
+                      skip = 4)
+
+Tocantins = read_excel("Tabela 2.27 - Tocantins.xlsx",
+                        skip = 4)
+
+```
+
+```{r,error=F, warning=F}
+
+### Leitura do segundo set de bancos
+
+Acre2 = read_excel("AC (2).xlsx",
+                   skip = 2)
+
+Alagoas2 = read_excel("AL.xlsx",
+                   skip = 2)
+
+Amapa2 = read_excel("AP.xlsx",
+                      skip = 2)
+
+Amazonas2 = read_excel("AM.xlsx",
+                      skip = 2)
+
+Bahia2 = read_excel("BA.xlsx",
+                      skip = 2)
+
+Ceara2 = read_excel("CE.xlsx",
+                      skip = 2)
+
+DF2 = read_excel("DF.xlsx",
+                 skip=2)
+
+Espirito2 = read_excel("ES.xlsx",
+                      skip = 2)
+
+Goias2 = read_excel("GO.xlsx",
+                      skip = 2)
+
+Maranhao2 = read_excel("MA.xlsx",
+                      skip = 2)
+
+Mato2 = read_excel("MT.xlsx",
+                       skip = 2)
+
+Mato_Sul2 = read_excel("MS.xlsx",
+                      skip = 2)
+
+Minas2 = read_excel("MG.xlsx",
+                   skip = 2)
+
+Para2= read_excel("PA.xlsx",
+                  skip = 2)
+
+Paraiba2 = read_excel("PB.xlsx",
+                      skip = 2)
+
+Parana2 = read_excel("PR.xlsx",
+                     skip = 2)
+
+Pernambuco2 = read_excel("PE.xlsx",
+                   skip = 2)
+
+Piaui2 = read_excel("PI.xlsx",
+                   skip = 2)
+
+RJ2 = read_excel("RJ.xlsx",
+                   skip = 2)
+
+Rio_norte2 = read_excel("RN.xlsx",
+                   skip = 2)
+
+Rio_Grande_do_Sul2 = read_excel("RS.xlsx",
+                   skip = 2)
+
+Rondonia2 = read_excel("RO.xlsx",
+                   skip = 2)
+
+Roraima2 = read_excel("RR.xlsx",
+                   skip = 2)
+
+Catarina2 = read_excel("SC.xlsx",
+                   skip = 2)
+
+SP2 = read_excel("SP.xlsx",
+                   skip = 2)
+
+Sergipe2 = read_excel("SE.xlsx",
+                   skip = 2)
+
+Tocantins2 = read_excel("TO.xlsx",
+                   skip = 2)
+```
+
+```{r}
+### Funcoes
+# Remove rows
+remove_rows <- function(data) {
+  data <- data[-c(1,nrow(data)),]
+  return(data)
+}
+
+# Remove rows 2
+remove_rows2 <- function(data) {
+  data <- data[c(nrow(data)-14:nrow(data)),]
+  return(data)
+}
+
+# Remove cols
+remove_cols <- function(data) {
+  data <- data[,-c(3,4)]
+  return(data)
+}
+
+# Define a function to rename the first column
+rename_column <- function(data, new_name) {
+  colnames(data)[1:11] <- c(new_name)
+  return(data)
+}
+
+
+# sapply col class
+class_ex <- function(data, new_name) {
+  data[new_name[1]] <- sapply(data[new_name[1]], as.character)
+  data[new_name[2:11]] <- sapply(data[new_name[2:11]], as.double)
+  return(data)
+}
+
+
+# sapply col class 2
+class_ex2 <- function(data, new_name) {
+  data[new_name[1]] <- sapply(data[new_name[1]], as.character)
+  data[new_name[2:11]] <- sapply(data[new_name[2:11]], as.double)
+  return(data)
+}
+
+
+# Agreggate
+
+Agre_fun = function(data) {
+  data = aggregate(. ~ Municipio,data = data, FUN = sum, na.action=NULL)
+  return(data)
+}
+```
+
+
+```{r}
+### Aplicacao das funcoes no primeiro set de bancos
+### Renomear as colunas e a principal para rodas as outras
+
+
+
+lista1 = list(Acre,Alagoas,Amapa,Amazonas,Bahia,Catarina,Ceara,DF,Espirito,Goias,Maranhao,
+             Mato, Mato_Sul, Minas,Para,Paraiba,Parana,Pernambuco, Piaui, Rio_Grande_do_Sul,
+             Rio_norte, RJ, Rondonia, Roraima, Sergipe, SP, Tocantins)
+
+lista1 = lapply(lista1,remove_rows)
+
+
+# Apply the function to all datasets in the list
+ColNames1 <- c("Municipio","Bovino","Bubalino","Equino","Suino_Total", "Suino_Matrizes",
+               "Caprino","Ovino","Galinaceos_Total",       
+               "Galinaceos_Galinhas", "Codornas")
+
+
+lista1 <- lapply(lista1, rename_column, ColNames1)
+
+
+####
+
+lista1 = lapply(lista1, class_ex, ColNames1)
+
+####
+
+lista1 = lapply(lista1,Agre_fun)
+
+"
+data_list = lapply(data_list, teste_fun)
+
+b = aggregate(. ~ Municipio ,data= a,FUN =  sum)
+kek = aggregate(. ~ Municipio, data = a, FUN = sum, na.action=NULL)
+
+df2 <- a %>% distinct(Municipio,.keep_all = TRUE)
+t = merge(df2,b)
+"
+```
+
+
+```{r}
+##### Teste com o banco 2
+
+lista2 = list(Acre2,Alagoas2,Amapa2,Amazonas2,Bahia2,Catarina2,Ceara2,DF2,Espirito2,Goias2,Maranhao2,
+             Mato2, Mato_Sul2, Minas2,Para2,Paraiba2,Parana2,Pernambuco2, Piaui2, Rio_Grande_do_Sul2,
+             Rio_norte2, RJ2, Rondonia2, Roraima2, Sergipe2, SP2, Tocantins2)
+
+lista2 = lapply(lista2,remove_rows2)
+
+lista2 = lapply(lista2,remove_cols)
+
+
+COLnames2 <- c("Municipio", #Municipios
+               "Codigo",  #código_municipio
+               "Área_km2",                 #area km^2 2022       
+               "Pop_residente",                           #Pop residentes pessoas 2022    
+               "Densi_demo",                             # densidade demografica 2022
+               "Escolarizacao",                  #Escolarização 6-14 anos 2022
+               "IDHM", #IDH por municipio 2012
+               "Mort_inf", #óbitos por mil nascidos vivos [2022]        
+               "Tot_receita_bruta", #Total de receitas brutas realizadas - R$ [2023]                    
+               "Tot_despesas_brutas",   #Total de despesas brutas empenhadas - R$ [2023]                  
+               "PIB_cap") # PIB per capita - R$ [2021]
+
+lista2 = lapply(lista2,rename_column,COLnames2)
+
+lista2 = lapply(lista2,Agre_fun)
+
+
+# Eu tenho que dar merge nos 2 bancos de dados agora
+# Basicamente é a úncia coisa que falta de programar que n seja ler banco
+```
+
+
+```{r}
+lista = c(lista2,lista1)
+
+lista = list()
+for (i in 1:length(lista1)) {
+  
+lista[[i]] <- merge(lista1[[i]], lista2[[i]], by.x = "Municipio", 
+             by.y = "Municipio",keep_all = TRUE)
+
+}
+View(lista[[3]])
+
+
+```
+
+```{r}
+
+df = Reduce(function(x, y) merge(x, y, all = TRUE), lista)
+
+write.csv(df,file="Municipios_Bra.csv")
+```
+
+```{r}
+
+row_lengths <- sapply(lista2, nrow)
+
+# View the result
+print(sum(row_lengths))
+
+```
+
